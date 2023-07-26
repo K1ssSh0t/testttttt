@@ -14,7 +14,7 @@ export function DeleteProduct({ id }: { id: number }) {
           method: "DELETE",
         }
       ).then((res) => {
-        return res.json();
+        return res;
       });
       console.log(data);
       router.refresh();
@@ -25,7 +25,7 @@ export function DeleteProduct({ id }: { id: number }) {
   return (
     <Button variant={"outline"} onClick={onSubmit}>
       {" "}
-      🗑️Delet
+      🗑️Delete
     </Button>
   );
 }

@@ -75,7 +75,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
           body: JSON.stringify(values),
         }
       ).then((res) => {
-        return res.json();
+        return res;
       });
       console.log(data);
       router.refresh();

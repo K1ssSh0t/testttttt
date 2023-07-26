@@ -11,6 +11,8 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { UpdateProduct } from "@/components/updateProduct";
+import { DataTable } from "./data-table";
+import { columns, Product } from "./columns";
 
 export const revalidate = 0; // revalidate this page every 60 seconds
 
@@ -38,10 +40,15 @@ async function getProducts() {
 
 export default async function Products() {
   const data = await getProducts();
+  console.log(data);
 
   return (
     <main className="flex min-h-screen flex-col items-center  p-8 gap-8 ">
       <DialogDemo />
+      <DataTable columns={columns} data={data} />
+      {/**
+       * 
+       * 
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader>
@@ -70,6 +77,8 @@ export default async function Products() {
           })}
         </TableBody>
       </Table>
+      
+       */}
     </main>
   );
 }
