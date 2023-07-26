@@ -39,7 +39,7 @@ export function ProfileForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
 
-    router.push("/products");
+    router.push("/dashboard/products");
     console.log(values);
   }
   return (

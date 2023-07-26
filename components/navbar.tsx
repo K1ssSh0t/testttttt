@@ -6,57 +6,41 @@ import { usePathname } from "next/navigation";
 
 import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
+import { SheetDemo } from "./sideBar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 export function MainNav() {
   const pathname = usePathname();
 
   return (
     <div className="mr-4 hidden md:flex">
+      <SheetDemo />
       <Link href="/" className="mr-6 flex items-center space-x-2">
         <Icons.logo className="h-6 w-6" />
-        <span className="hidden font-bold sm:inline-block">
-          {"siteConfig.name"}
-        </span>
+        <span className="hidden font-bold sm:inline-block">CRUD APP</span>
       </Link>
       <nav className="flex items-center space-x-6 text-sm font-medium">
         <Link
-          href="/docs"
+          href="/dashboard/products"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname === "/docs" ? "text-foreground" : "text-foreground/60"
-          )}
-        >
-          Documentation
-        </Link>
-        <Link
-          href="/docs/components"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/docs/components")
+            pathname === "/dashboard/products"
               ? "text-foreground"
               : "text-foreground/60"
           )}
         >
-          Components
+          Products
         </Link>
         <Link
-          href="/examples"
+          href="/dashboard/users"
           className={cn(
             "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/examples")
+            pathname?.startsWith("/dashboard/users")
               ? "text-foreground"
               : "text-foreground/60"
           )}
         >
-          Examples
-        </Link>
-        <Link
-          href={"siteConfig.links.github"}
-          className={cn(
-            "hidden text-foreground/60 transition-colors hover:text-foreground/80 lg:block"
-          )}
-        >
-          GitHub
+          Users
         </Link>
       </nav>
     </div>
@@ -71,26 +55,19 @@ export function SiteHeader() {
 
         <div className="flex flex-1 items-center justify-between space-x-2 md:justify-end">
           <div className="w-full flex-1 md:w-auto md:flex-none"></div>
-          <nav className="flex items-center">
+          <nav className="flex items-center text-sm font-medium">
+            <Avatar className=" mx-2">
+              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarFallback>CN</AvatarFallback>
+            </Avatar>
+
             <Link
-              href={"siteConfig.links.github"}
-              target="_blank"
-              rel="noreferrer"
+              href="/"
+              className={cn(
+                "transition-colors text-foreground/60 hover:text-foreground/80"
+              )}
             >
-              <div className={"ghost  w-9 px-0"}>
-                <Icons.gitHub className="h-4 w-4" />
-                <span className="sr-only">GitHub</span>
-              </div>
-            </Link>
-            <Link
-              href={"siteConfig.links.twitter"}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div className={"ghost  w-9 px-0"}>
-                <Icons.twitter className="h-4 w-4 fill-current" />
-                <span className="sr-only">Twitter</span>
-              </div>
+              Cerrar Sesion
             </Link>
           </nav>
         </div>

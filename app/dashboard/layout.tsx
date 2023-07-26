@@ -15,11 +15,9 @@ export default function ProductsLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
-      <body className={inter.className}>
-        <SiteHeader />
-        {children}
-      </body>
-    </html>
+    <section className={inter.className}>
+      <SiteHeader />
+      {children}
+    </section>
   );
 }
