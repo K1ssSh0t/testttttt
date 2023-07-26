@@ -16,6 +16,11 @@ export const revalidate = 0; // revalidate this page every 60 seconds
 
 async function getProducts() {
   const res = await fetch("http://apiparaprincipiantes.test/api/videoGames", {
+    method: "GET",
+    headers: {
+      "Content-Type": "aplication/json",
+      "Cache-Control": "no-cache, private",
+    },
     next: { revalidate: 0 },
   });
   // The return value is *not* serialized

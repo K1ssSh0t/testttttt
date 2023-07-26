@@ -63,20 +63,26 @@ export function UpdateProduct({ Product }: { Product: Product }) {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const res = fetch(
-      `http://apiparaprincipiantes.test/api/videoGames/${Product.id}`,
-      {
-        method: "PUT",
-        headers: {
-          "Content-Type": "aplication/json",
-        },
-        body: JSON.stringify(values),
-      }
-    );
-    //router.push("/dashboard/products");
-    console.log(res);
-    router.refresh();
+    async function updateData() {
+      const data = fetch(
+        `http://apiparaprincipiantes.test/api/videoGames/${Product.id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "aplication/json",
+            "Cache-Control": "no-cache, private",
+          },
+          body: JSON.stringify(values),
+        }
+      ).then((res) => {
+        return res.json();
+      });
+      console.log(data);
+      router.refresh();
+    }
+
     // window.location.reload();
+    updateData();
   }
   return (
     <Dialog>
@@ -87,7 +93,8 @@ export function UpdateProduct({ Product }: { Product: Product }) {
         <DialogHeader>
           <DialogTitle>Create Product</DialogTitle>
           <DialogDescription>
-            Make changes to your profile here. Click save when you re done.
+            Make changes to your profile here. Click save when you &apos re
+            done.
           </DialogDescription>
         </DialogHeader>
         <Form {...form}>

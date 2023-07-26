@@ -56,16 +56,28 @@ export function DialogDemo() {
   function onSubmit(values: z.infer<typeof formSchema>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const res = fetch("http://apiparaprincipiantes.test/api/videoGames", {
-      method: "POST",
-      headers: {
-        "Content-Type": "aplication/json",
-      },
-      body: JSON.stringify(values),
-    });
+    async function fetchData() {
+      const data = await fetch(
+        "http://apiparaprincipiantes.test/api/videoGames",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "aplication/json",
+            "Cache-Control": "no-cache, private",
+          },
+          body: JSON.stringify(values),
+        }
+      ).then((res) => {
+        return res.json();
+      });
+      console.log(data);
+      router.refresh();
+    }
+
     //router.push("/dashboard/products");
-    console.log(res);
-    router.refresh();
+    //console.log(res);
+    //router.refresh();
+    fetchData();
   }
   return (
     <Dialog>

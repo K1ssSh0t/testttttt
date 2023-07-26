@@ -7,15 +7,20 @@ export function DeleteProduct({ id }: { id: number }) {
   function onSubmit() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-    const res = fetch(
-      `http://apiparaprincipiantes.test/api/videoGames/${id}}`,
-      {
-        method: "DELETE",
-      }
-    );
-    //router.push("/dashboard/products");
-    console.log(res);
-    router.refresh();
+    async function deleteData() {
+      const data = fetch(
+        `http://apiparaprincipiantes.test/api/videoGames/${id}}`,
+        {
+          method: "DELETE",
+        }
+      ).then((res) => {
+        return res.json();
+      });
+      console.log(data);
+      router.refresh();
+    }
+
+    deleteData();
   }
   return (
     <Button variant={"outline"} onClick={onSubmit}>
