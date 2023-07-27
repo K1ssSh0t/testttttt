@@ -32,6 +32,7 @@ type User = {
   name: string;
   email: string;
   password: string;
+  profile_picture: string;
 };
 export function UpdateUser({ User }: { User: User }) {
   const formSchema = z
@@ -39,7 +40,7 @@ export function UpdateUser({ User }: { User: User }) {
       name: z.string().min(2, {
         message: "Username must be at least 2 characters.",
       }),
-
+      profile_picture: z.string(),
       email: z.string().email({
         message: "Must be email",
       }),
@@ -61,6 +62,7 @@ export function UpdateUser({ User }: { User: User }) {
       email: User.email,
       password: User.password,
       confirm_password: User.password,
+      profile_picture: User.profile_picture,
     },
   });
 
@@ -101,7 +103,7 @@ export function UpdateUser({ User }: { User: User }) {
           ✒️ Update{" "}
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px] max-h-[670px]  overflow-y-scroll  ">
         <DialogHeader>
           <DialogTitle>Update Userr</DialogTitle>
           <DialogDescription></DialogDescription>
@@ -132,6 +134,20 @@ export function UpdateUser({ User }: { User: User }) {
                     <Input placeholder="shadcn" {...field} type="email" />
                   </FormControl>
                   <FormDescription>Your email</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="profile_picture"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Avatar</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} />
+                  </FormControl>
+                  <FormDescription>Your profile picture link</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

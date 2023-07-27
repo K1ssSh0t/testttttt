@@ -29,7 +29,7 @@ export default function Users() {
     getClients();
   }, []);
   return (
-    <main className="flex min-h-screen flex-col items-center  p-8 gap-8 ">
+    <main className="flex min-h-screen flex-col items-center  p-8 gap-8  ">
       <AddUser />
       <DataTable data={clientes} columns={columns} />
     </main>

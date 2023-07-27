@@ -26,13 +26,15 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { ScrollArea } from "@/components/ui/scroll-area";
+
 export function AddUser() {
   const formSchema = z
     .object({
       name: z.string().min(2, {
         message: "Username must be at least 2 characters.",
       }),
-
+      profile_picture: z.string(),
       email: z.string().email({
         message: "Must be email",
       }),
@@ -54,6 +56,7 @@ export function AddUser() {
       email: "",
       password: "",
       confirm_password: "",
+      profile_picture: "",
     },
   });
 
@@ -86,13 +89,13 @@ export function AddUser() {
       <DialogTrigger asChild>
         <Button variant="outline">New User ➕</Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[430px] max-h-[670px]  overflow-y-scroll  ">
         <DialogHeader>
           <DialogTitle>Create User</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 ">
             <FormField
               control={form.control}
               name="name"
@@ -117,6 +120,20 @@ export function AddUser() {
                     <Input placeholder="shadcn" {...field} type="email" />
                   </FormControl>
                   <FormDescription>Your email</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />{" "}
+            <FormField
+              control={form.control}
+              name="profile_picture"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Avatar</FormLabel>
+                  <FormControl>
+                    <Input placeholder="link" {...field} />
+                  </FormControl>
+                  <FormDescription>Your profile picture Link</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
@@ -152,9 +169,7 @@ export function AddUser() {
             <Button type="submit">Submit</Button>
           </form>
         </Form>
-        <DialogFooter>
-          <Button type="submit">Done</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

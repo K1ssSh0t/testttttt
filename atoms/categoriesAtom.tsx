@@ -1,4 +1,5 @@
 import { atom, useAtom } from "jotai";
+import { atomWithStorage } from "jotai/utils";
 
 const data = async () =>
   await fetch("http://apiparaprincipiantes.test/api/categories", {
@@ -14,9 +15,20 @@ const data = async () =>
 
 export const categoriesAtom = atom(data);
 
-export const userDataAtom = atom<any>({
+export const userDataAtom = atomWithStorage<any>("userData", {
   id: 1,
   name: "User",
   email: "example@email.com",
   password: "000000",
+  profile_picture:
+    "https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png",
 });
+/*export const userDataAtom = atom<any>({
+  id: 1,
+  name: "User",
+  email: "example@email.com",
+  password: "000000",
+  profile_picture:
+    "https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png",
+});
+*/

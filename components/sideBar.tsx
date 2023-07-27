@@ -29,15 +29,12 @@ export function SheetDemo() {
       </SheetTrigger>
       <SheetContent side={"left"}>
         <SheetHeader>
-          <SheetTitle>Your Data</SheetTitle>
-          <SheetDescription>
-            Make changes to your profile here. Click save when you &apos re
-            done.
-          </SheetDescription>
+          <SheetTitle>My Data</SheetTitle>
+          <SheetDescription>Your can see your user data here.</SheetDescription>
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <Avatar className=" w-32  h-32 place-self-center">
-            <AvatarImage src="https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png" />
+            <AvatarImage src={user.profile_picture} />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 

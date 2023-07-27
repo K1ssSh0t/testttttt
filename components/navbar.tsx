@@ -19,10 +19,10 @@ export function MainNav() {
   return (
     <div className="mr-4 hidden md:flex">
       <SheetDemo />
-      <Link href="/" className="mr-6 flex items-center space-x-2">
+      <div className="mr-6 flex items-center space-x-2">
         <Icons.logo className="h-6 w-6" />
         <span className="hidden font-bold sm:inline-block">CRUD APP</span>
-      </Link>
+      </div>
       <nav className="flex items-center space-x-6 text-sm font-medium">
         <Link
           href="/dashboard/products"
@@ -73,7 +73,7 @@ export function SiteHeader() {
           <div className="w-full flex-1 md:w-auto md:flex-none"></div>
           <nav className="flex items-center text-sm font-medium">
             <Avatar className=" mx-2">
-              <AvatarImage src="https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png" />
+              <AvatarImage src={user.profile_picture} />
               <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
 

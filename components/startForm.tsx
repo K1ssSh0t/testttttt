@@ -37,7 +37,7 @@ export function LoginForm() {
       name: z.string().min(2, {
         message: "Username must be at least 2 characters.",
       }),
-
+      profile_picture: z.string(),
       email: z.string().email({
         message: "Must be email",
       }),
@@ -59,6 +59,7 @@ export function LoginForm() {
       email: "",
       password: "",
       confirm_password: "",
+      profile_picture: "",
     },
   });
 
@@ -149,6 +150,22 @@ export function LoginForm() {
                         <Input placeholder="Email" {...field} type="email" />
                       </FormControl>
                       <FormDescription>Your email</FormDescription>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+                <FormField
+                  control={form.control}
+                  name="profile_picture"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Avatar</FormLabel>
+                      <FormControl>
+                        <Input placeholder="link" {...field} />
+                      </FormControl>
+                      <FormDescription>
+                        Your profile picture link
+                      </FormDescription>
                       <FormMessage />
                     </FormItem>
                   )}
