@@ -2,7 +2,7 @@ import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 const data = async () =>
-  await fetch("http://apiparaprincipiantes.test/api/categories", {
+  await fetch("https://laravel-api-production.up.railway.app/api/categories", {
     method: "GET",
     headers: {
       "Content-Type": "aplication/json",

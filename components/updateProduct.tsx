@@ -71,7 +71,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
     // ✅ This will be type-safe and validated.
     async function updateData() {
       const data = await fetch(
-        `http://apiparaprincipiantes.test/api/videoGames/${Product.id}`,
+        `https://laravel-api-production.up.railway.app/api/videoGames/${Product.id}`,
         {
           method: "PUT",
           headers: {

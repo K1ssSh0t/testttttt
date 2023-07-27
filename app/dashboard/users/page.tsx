@@ -10,7 +10,7 @@ export default function Users() {
   useEffect(() => {
     async function getClients() {
       const data = await fetch(
-        "http://apiparaprincipiantes.test/api/clientes",
+        "https://laravel-api-production.up.railway.app/api/clientes",
         {
           method: "GET",
           headers: {

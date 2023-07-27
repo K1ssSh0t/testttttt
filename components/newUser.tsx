@@ -66,7 +66,7 @@ export function AddUser() {
     // ✅ This will be type-safe and validated.
     async function fetchData() {
       const data = await fetch(
-        "http://apiparaprincipiantes.test/api/clientes",
+        "https://laravel-api-production.up.railway.app/api/clientes",
         {
           method: "POST",
           headers: {

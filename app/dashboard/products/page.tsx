@@ -13,7 +13,7 @@ export default function Products() {
   useEffect(() => {
     async function getProducts() {
       const data = await fetch(
-        "http://apiparaprincipiantes.test/api/videoGames",
+        "https://laravel-api-production.up.railway.app/api/videoGames",
         {
           method: "GET",
           headers: {

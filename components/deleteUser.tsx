@@ -9,7 +9,7 @@ export function DeleteUser({ id }: { id: number }) {
     // ✅ This will be type-safe and validated.
     async function deleteData() {
       const data = await fetch(
-        `http://apiparaprincipiantes.test/api/clientes/${id}}`,
+        `https://laravel-api-production.up.railway.app/api/clientes/${id}}`,
         {
           method: "DELETE",
         }

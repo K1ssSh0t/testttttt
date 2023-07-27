@@ -9,7 +9,7 @@ export function DeleteProduct({ id }: { id: number }) {
     // ✅ This will be type-safe and validated.
     async function deleteData() {
       const data = await fetch(
-        `http://apiparaprincipiantes.test/api/videoGames/${id}}`,
+        `https://laravel-api-production.up.railway.app/api/videoGames/${id}}`,
         {
           method: "DELETE",
         }

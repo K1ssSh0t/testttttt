@@ -72,7 +72,7 @@ export function UpdateUser({ User }: { User: User }) {
     // ✅ This will be type-safe and validated.
     async function fetchData() {
       const data = await fetch(
-        `http://apiparaprincipiantes.test/api/clientes/${User.id}`,
+        `https://laravel-api-production.up.railway.app/api/clientes/${User.id}`,
         {
           method: "PUT",
           headers: {

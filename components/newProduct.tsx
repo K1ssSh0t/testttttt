@@ -61,7 +61,7 @@ export function DialogDemo() {
     // ✅ This will be type-safe and validated.
     async function fetchData() {
       const data = await fetch(
-        "http://apiparaprincipiantes.test/api/videoGames",
+        "https://laravel-api-production.up.railway.app/api/videoGames",
         {
           method: "POST",
           headers: {
