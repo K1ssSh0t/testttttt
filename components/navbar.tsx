@@ -14,7 +14,7 @@ import { useAtomValue, useSetAtom } from "jotai";
 export function MainNav() {
   const pathname = usePathname();
   const user = useAtomValue(userDataAtom);
-  console.log(user);
+  //console.log(user);
 
   return (
     <div className="mr-4 hidden md:flex">
@@ -73,7 +73,7 @@ export function SiteHeader() {
           <div className="w-full flex-1 md:w-auto md:flex-none"></div>
           <nav className="flex items-center text-sm font-medium">
             <Avatar className=" mx-2">
-              <AvatarImage src="https://github.com/shadcn.png" />
+              <AvatarImage src="https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png" />
               <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
 

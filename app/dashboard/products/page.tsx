@@ -46,7 +46,7 @@ async function getProducts() {
 
 export default function Products() {
   // const data = await getProducts();
-  // console.log(data);
+
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
@@ -65,7 +65,6 @@ export default function Products() {
         return res.json();
       });
       setProducts(data);
-      // console.log(data);
     }
 
     getProducts();

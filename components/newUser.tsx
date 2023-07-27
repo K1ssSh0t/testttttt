@@ -75,7 +75,7 @@ export function AddUser() {
       ).then((res) => {
         return res.json();
       });
-      console.log(data);
+      // console.log(data);
       router.refresh();
       window.location.reload();
     }

@@ -84,7 +84,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
       ).then((res) => {
         return res;
       });
-      console.log(data);
+      // console.log(data);
       router.refresh();
       window.location.reload();
     }

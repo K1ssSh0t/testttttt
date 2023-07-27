@@ -16,7 +16,7 @@ export function DeleteUser({ id }: { id: number }) {
       ).then((res) => {
         return res;
       });
-      console.log(data);
+      // console.log(data);
       router.refresh();
       window.location.reload();
     }

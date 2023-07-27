@@ -29,7 +29,7 @@ export function SheetDemo() {
       </SheetTrigger>
       <SheetContent side={"left"}>
         <SheetHeader>
-          <SheetTitle>Edit profile</SheetTitle>
+          <SheetTitle>Your Data</SheetTitle>
           <SheetDescription>
             Make changes to your profile here. Click save when you &apos re
             done.
@@ -37,7 +37,7 @@ export function SheetDemo() {
         </SheetHeader>
         <div className="grid gap-4 py-4">
           <Avatar className=" w-32  h-32 place-self-center">
-            <AvatarImage src="https://github.com/shadcn.png" />
+            <AvatarImage src="https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png" />
             <AvatarFallback>CN</AvatarFallback>
           </Avatar>
 
@@ -45,18 +45,28 @@ export function SheetDemo() {
             <Label htmlFor="name" className="text-right">
               Name
             </Label>
-            <Input id="name" value="Pedro Duarte" className="col-span-3" />
+            <Input
+              id="name"
+              value={user.name}
+              className="col-span-3"
+              readOnly
+            />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-              Username
+              Email
             </Label>
-            <Input id="username" value="@peduarte" className="col-span-3" />
+            <Input
+              id="username"
+              value={user.email}
+              className="col-span-3"
+              readOnly
+            />
           </div>
         </div>
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Save changes</Button>
+            {/** <Button type="submit">Save changes</Button> */}
           </SheetClose>
         </SheetFooter>
       </SheetContent>
