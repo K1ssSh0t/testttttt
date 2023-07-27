@@ -13,6 +13,7 @@ export type Client = {
   name: string;
   email: string;
   password: string;
+  profile_picture: string;
 };
 
 export const columns: ColumnDef<Client>[] = [
