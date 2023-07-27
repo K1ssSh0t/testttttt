@@ -1,4 +1,5 @@
 "use client";
+
 import { DeleteProduct } from "@/components/deleteProduct";
 import { DialogDemo } from "@/components/newProduct";
 import { Button } from "@/components/ui/button";
