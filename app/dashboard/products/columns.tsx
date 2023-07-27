@@ -9,7 +9,7 @@ import { ColumnDef } from "@tanstack/react-table";
 export type Product = {
   id: number;
   name: string;
-  category: "RPG" | "Accion" | "Adventure" | "Indie";
+  category_id: 1 | 2 | 3 | 4;
   score: number;
 };
 
@@ -19,7 +19,7 @@ export const columns: ColumnDef<Product>[] = [
     header: "Name",
   },
   {
-    accessorKey: "category",
+    accessorKey: "category_id",
     header: "Category",
   },
 
@@ -34,6 +34,7 @@ export const columns: ColumnDef<Product>[] = [
   },
   {
     id: "actions",
+    header: () => <div className="text-right">Accions</div>,
     cell: ({ row }) => {
       const product = row.original;
 

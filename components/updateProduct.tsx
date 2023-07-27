@@ -1,5 +1,5 @@
 "use client";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -10,10 +10,13 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
+import { categoriesAtom } from "@/atoms/categoriesAtom";
+
 import { Label } from "@/components/ui/label";
 import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
+import { cn } from "@/lib/utils";
 
 import {
   Form,
@@ -28,20 +31,23 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
+import { atom, useAtom } from "jotai";
+import { useHydrateAtoms } from "jotai/utils";
+
 type Product = {
   id: number;
   name: string;
-  category: string;
+  category_id: number;
   score: number;
 };
 export function UpdateProduct({ Product }: { Product: Product }) {
+  const [categories, setCategories] = useAtom(categoriesAtom);
+  //console.log(categories.map(({ id }) => id));
   const formSchema = z.object({
     name: z.string().min(2, {
       message: "Username must be at least 2 characters.",
     }),
-    category: z.string().min(2, {
-      message: "Category must be at least 2 characters.",
-    }),
+    category_id: z.string(),
     score: z.coerce.number().gte(1).lte(100, {
       message: "Score  must be lest than 100",
     }),
@@ -54,7 +60,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
     resolver: zodResolver(formSchema),
     defaultValues: {
       name: Product.name,
-      category: Product.category,
+      category_id: Product.category_id as unknown as string,
       score: Product.score,
     },
   });
@@ -64,13 +70,14 @@ export function UpdateProduct({ Product }: { Product: Product }) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     async function updateData() {
-      const data = fetch(
+      const data = await fetch(
         `http://apiparaprincipiantes.test/api/videoGames/${Product.id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "aplication/json",
             "Cache-Control": "no-cache, private",
+            Accept: "aplication/json",
           },
           body: JSON.stringify(values),
         }
@@ -79,6 +86,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
       });
       console.log(data);
       router.refresh();
+      window.location.reload();
     }
 
     // window.location.reload();
@@ -87,7 +95,9 @@ export function UpdateProduct({ Product }: { Product: Product }) {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">✒️Update </Button>
+        <Button variant="outline" className=" mx-4">
+          ✒️ Update{" "}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
@@ -115,13 +125,34 @@ export function UpdateProduct({ Product }: { Product: Product }) {
             />
             <FormField
               control={form.control}
-              name="category"
+              name="category_id"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Category</FormLabel>
+
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <select
+                      className={cn(
+                        buttonVariants({ variant: "outline" }),
+                        "w-[200px] appearance-none bg-transparent font-normal"
+                      )}
+                      itemType="number"
+                      {...field}
+                    >
+                      {categories.map((category: any) => {
+                        return (
+                          <option
+                            value={parseInt(category.id)}
+                            key={category.id}
+                            className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
+                          >
+                            {category.name}
+                          </option>
+                        );
+                      })}
+                    </select>
                   </FormControl>
+
                   <FormDescription>Category of the Video Game</FormDescription>
                   <FormMessage />
                 </FormItem>
@@ -133,6 +164,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Score</FormLabel>
+
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>

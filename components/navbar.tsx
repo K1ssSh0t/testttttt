@@ -8,9 +8,13 @@ import { cn } from "@/lib/utils";
 import { Icons } from "@/components/icons";
 import { SheetDemo } from "./sideBar";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { userDataAtom } from "@/atoms/categoriesAtom";
+import { useAtomValue, useSetAtom } from "jotai";
 
 export function MainNav() {
   const pathname = usePathname();
+  const user = useAtomValue(userDataAtom);
+  console.log(user);
 
   return (
     <div className="mr-4 hidden md:flex">
@@ -42,12 +46,24 @@ export function MainNav() {
         >
           Users
         </Link>
+        <Link
+          href="/dashboard/categories"
+          className={cn(
+            "transition-colors hover:text-foreground/80",
+            pathname?.startsWith("/dashboard/categories")
+              ? "text-foreground"
+              : "text-foreground/60"
+          )}
+        >
+          Categories
+        </Link>
       </nav>
     </div>
   );
 }
 
 export function SiteHeader() {
+  const user = useAtomValue(userDataAtom);
   return (
     <header className="supports-backdrop-blur:bg-background/60 sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur">
       <div className="container flex h-14 items-center">
@@ -58,7 +74,7 @@ export function SiteHeader() {
           <nav className="flex items-center text-sm font-medium">
             <Avatar className=" mx-2">
               <AvatarImage src="https://github.com/shadcn.png" />
-              <AvatarFallback>CN</AvatarFallback>
+              <AvatarFallback>{user.name}</AvatarFallback>
             </Avatar>
 
             <Link
@@ -67,7 +83,7 @@ export function SiteHeader() {
                 "transition-colors text-foreground/60 hover:text-foreground/80"
               )}
             >
-              Cerrar Sesion
+              Log Out
             </Link>
           </nav>
         </div>

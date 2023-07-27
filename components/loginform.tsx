@@ -16,51 +16,91 @@ import {
 import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
-
-const formSchema = z.object({
-  username: z.string().min(2, {
-    message: "Username must be at least 2 characters.",
-  }),
-});
+import { userDataAtom } from "@/atoms/categoriesAtom";
+import { useAtomValue, useSetAtom } from "jotai";
 
 export function ProfileForm() {
+  const setUser = useSetAtom(userDataAtom);
   const router = useRouter();
-
+  const formSchemaLogin = z.object({
+    email: z.string().email({
+      message: "Must be email",
+    }),
+    password: z.string().min(6),
+  });
   // 1. Define your form.
-  const form = useForm<z.infer<typeof formSchema>>({
-    resolver: zodResolver(formSchema),
+  const formLogin = useForm<z.infer<typeof formSchemaLogin>>({
+    resolver: zodResolver(formSchemaLogin),
     defaultValues: {
-      username: "",
+      email: "",
+      password: "",
     },
   });
 
   // 2. Define a submit handler.
-  function onSubmit(values: z.infer<typeof formSchema>) {
+  function onSubmitLogin(values: z.infer<typeof formSchemaLogin>) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
-
-    router.push("/dashboard/products");
-    console.log(values);
+    async function fetchData() {
+      const data = await fetch(
+        `http://apiparaprincipiantes.test/api/clientes/${values.email}/${values.password}`,
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "aplication/json",
+          },
+        }
+      )
+        .then((res) => {
+          if (res.ok) {
+            router.push("/dashboard/products");
+            //window.location.reload();
+            setUser(res.json());
+            return res.json();
+          }
+          throw new Error("Something went wrong");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    }
+    fetchData();
   }
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+    <Form {...formLogin}>
+      <form
+        onSubmit={formLogin.handleSubmit(onSubmitLogin)}
+        className="space-y-8"
+      >
         <FormField
-          control={form.control}
-          name="username"
+          control={formLogin.control}
+          name="email"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Username</FormLabel>
+              <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input placeholder="shadcn" {...field} />
+                <Input placeholder="Email" {...field} />
               </FormControl>
-              <FormDescription>
-                This is your public display name.
-              </FormDescription>
+              <FormDescription>Your email</FormDescription>
               <FormMessage />
             </FormItem>
           )}
         />
+        <FormField
+          control={formLogin.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem>
+              <FormLabel>Password</FormLabel>
+              <FormControl>
+                <Input placeholder="Password" {...field} type="password" />
+              </FormControl>
+              <FormDescription>Your passsword</FormDescription>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
         <Button type="submit">Submit</Button>
       </form>
     </Form>

@@ -1,3 +1,4 @@
+"use client";
 import { DeleteProduct } from "@/components/deleteProduct";
 import { DialogDemo } from "@/components/newProduct";
 import { Button } from "@/components/ui/button";
@@ -13,9 +14,13 @@ import {
 import { UpdateProduct } from "@/components/updateProduct";
 import { DataTable } from "./data-table";
 import { columns, Product } from "./columns";
+import { useEffect, useState } from "react";
+import { atom, useAtom } from "jotai";
+import { Provider } from "jotai";
+//export const revalidate = 0; // revalidate this page every 60 seconds
 
-export const revalidate = 0; // revalidate this page every 60 seconds
-
+// TODO: Hacer que la pagina se recarge en cada accion
+/*
 async function getProducts() {
   const res = await fetch("http://apiparaprincipiantes.test/api/videoGames", {
     method: "GET",
@@ -37,16 +42,41 @@ async function getProducts() {
 
   return res.json();
 }
+*/
 
-export default async function Products() {
-  const data = await getProducts();
-  console.log(data);
+export default function Products() {
+  // const data = await getProducts();
+  // console.log(data);
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function getProducts() {
+      const data = await fetch(
+        "http://apiparaprincipiantes.test/api/videoGames",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "aplication/json",
+            "Cache-Control": "no-cache, private",
+          },
+          next: { revalidate: 0 },
+        }
+      ).then((res) => {
+        return res.json();
+      });
+      setProducts(data);
+      // console.log(data);
+    }
+
+    getProducts();
+  }, []);
 
   return (
     <main className="flex min-h-screen flex-col items-center  p-8 gap-8 ">
-      <DialogDemo />
-      <DataTable columns={columns} data={data} />
-      {/**
+      <Provider>
+        <DialogDemo />
+        <DataTable columns={columns} data={products} />
+        {/**
        * 
        * 
       <Table>
@@ -79,6 +109,7 @@ export default async function Products() {
       </Table>
       
        */}
+      </Provider>
     </main>
   );
 }

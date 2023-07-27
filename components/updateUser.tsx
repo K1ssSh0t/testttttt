@@ -10,8 +10,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 
-import { Label } from "@/components/ui/label";
-import Link from "next/link";
 import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 
@@ -28,21 +26,30 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { useAtom } from "jotai";
 
-import { categoriesAtom } from "@/atoms/categoriesAtom";
+type User = {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+};
+export function UpdateUser({ User }: { User: User }) {
+  const formSchema = z
+    .object({
+      name: z.string().min(2, {
+        message: "Username must be at least 2 characters.",
+      }),
 
-export function DialogDemo() {
-  const [categories, setCategories] = useAtom(categoriesAtom);
-  const formSchema = z.object({
-    name: z.string().min(2, {
-      message: "Username must be at least 2 characters.",
-    }),
-    category_id: z.string(),
-    score: z.coerce.number().gte(1).lte(100, {
-      message: "Score  must be lest than 100",
-    }),
-  });
+      email: z.string().email({
+        message: "Must be email",
+      }),
+      password: z.string().min(6),
+      confirm_password: z.string().min(6),
+    })
+    .refine((data) => data.password === data.confirm_password, {
+      message: "Password doesn't match",
+      path: ["confirm_password"],
+    });
 
   const router = useRouter();
 
@@ -50,8 +57,10 @@ export function DialogDemo() {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
-      category_id: "1",
+      name: User.name,
+      email: User.email,
+      password: User.password,
+      confirm_password: User.password,
     },
   });
 
@@ -61,40 +70,41 @@ export function DialogDemo() {
     // ✅ This will be type-safe and validated.
     async function fetchData() {
       const data = await fetch(
-        "http://apiparaprincipiantes.test/api/videoGames",
+        `http://apiparaprincipiantes.test/api/clientes/${User.id}`,
         {
-          method: "POST",
+          method: "PUT",
           headers: {
             "Content-Type": "aplication/json",
             Accept: "aplication/json",
           },
           body: JSON.stringify(values),
         }
-      ).then((res) => {
-        return res.json();
-      });
-      console.log(data);
-      router.refresh();
-      window.location.reload();
+      )
+        .then((res) => {
+          if (res.ok) {
+            router.refresh();
+            window.location.reload();
+            return res.json();
+          }
+          throw new Error("Something went wrong");
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     }
-
-    //router.push("/dashboard/products");
-    //console.log(res);
-    //router.refresh();
     fetchData();
   }
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button variant="outline">New Product ➕</Button>
+        <Button variant="outline" className=" mx-4">
+          ✒️ Update{" "}
+        </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Product</DialogTitle>
-          <DialogDescription>
-            Make changes to your profile here. Click save when you &apos re
-            done.
-          </DialogDescription>
+          <DialogTitle>Update Userr</DialogTitle>
+          <DialogDescription></DialogDescription>
         </DialogHeader>
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -107,54 +117,49 @@ export function DialogDemo() {
                   <FormControl>
                     <Input placeholder="shadcn" {...field} />
                   </FormControl>
-                  <FormDescription>Name of the Video Game</FormDescription>
+                  <FormDescription>Your name</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="category_id"
+              name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Category</FormLabel>
+                  <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <select
-                      className={cn(
-                        buttonVariants({ variant: "outline" }),
-                        "w-[200px] appearance-none bg-transparent font-normal"
-                      )}
-                      itemType="number"
-                      {...field}
-                    >
-                      {categories.map((category: any) => {
-                        return (
-                          <option
-                            value={parseInt(category.id)}
-                            key={category.id}
-                            className="relative flex w-full cursor-default select-none items-center rounded-sm py-1.5 pl-8 pr-2 text-sm outline-none focus:bg-accent focus:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50"
-                          >
-                            {category.name}
-                          </option>
-                        );
-                      })}
-                    </select>
+                    <Input placeholder="shadcn" {...field} type="email" />
                   </FormControl>
-                  <FormDescription>Category of the Video Game</FormDescription>
+                  <FormDescription>Your email</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
             />
             <FormField
               control={form.control}
-              name="score"
+              name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Score</FormLabel>
+                  <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input placeholder="shadcn" {...field} />
+                    <Input placeholder="shadcn" {...field} type="password" />
                   </FormControl>
-                  <FormDescription>Score of the Video Game</FormDescription>
+                  <FormDescription>Your password</FormDescription>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
+            <FormField
+              control={form.control}
+              name="confirm_password"
+              render={({ field }) => (
+                <FormItem>
+                  <FormLabel>Password</FormLabel>
+                  <FormControl>
+                    <Input placeholder="shadcn" {...field} type="password" />
+                  </FormControl>
+                  <FormDescription>Confirm your password</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}

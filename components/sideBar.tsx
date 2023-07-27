@@ -14,8 +14,11 @@ import {
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 import { Icons } from "@/components/icons";
+import { userDataAtom } from "@/atoms/categoriesAtom";
+import { useAtomValue, useSetAtom } from "jotai";
 
 export function SheetDemo() {
+  const user = useAtomValue(userDataAtom);
   return (
     <Sheet>
       <SheetTrigger asChild>
