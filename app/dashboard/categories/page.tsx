@@ -1,8 +1,6 @@
-"use client";
 import { Metadata } from "next";
 import { DataTable } from "../products/data-table";
 import { columns } from "./columns";
-import { useEffect, useState } from "react";
 
 export const revalidate = 0;
 
