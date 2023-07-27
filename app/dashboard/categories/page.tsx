@@ -1,7 +1,9 @@
+"use client";
 import { Metadata } from "next";
 import { DataTable } from "../products/data-table";
 import { columns } from "./columns";
-
+import { useEffect, useState } from "react";
+/*
 export const metadata: Metadata = {
   title: "Categories",
 };
@@ -20,12 +22,34 @@ async function getCategories() {
 
   return data.json();
 }
+*/
+export default function Categories() {
+  const [categories, setCategories] = useState([]);
 
-export default async function Categories() {
-  const data = await getCategories();
+  useEffect(() => {
+    async function getProducts() {
+      const data = await fetch(
+        "http://apiparaprincipiantes.test/api/categories",
+        {
+          method: "GET",
+          headers: {
+            "Content-Type": "aplication/json",
+            "Cache-Control": "no-cache, private",
+          },
+          next: { revalidate: 0 },
+        }
+      ).then((res) => {
+        return res.json();
+      });
+      setCategories(data);
+    }
+
+    getProducts();
+  }, []);
+  //const data = await getCategories();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <DataTable data={data} columns={columns} />
+      <DataTable data={categories} columns={columns} />
     </main>
   );
 }
