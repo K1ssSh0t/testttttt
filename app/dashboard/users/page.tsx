@@ -5,10 +5,6 @@ import { DataTable } from "../products/data-table";
 import { columns } from "./columns";
 import { AddUser } from "@/components/newUser";
 
-export const metadata: Metadata = {
-  title: "Users",
-};
-
 export default function Users() {
   const [clientes, setClientes] = useState([]);
   useEffect(() => {
