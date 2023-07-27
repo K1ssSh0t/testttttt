@@ -19,7 +19,7 @@ import { atom, useAtom } from "jotai";
 import { Provider } from "jotai";
 //export const revalidate = 0; // revalidate this page every 60 seconds
 
-// TODO: Hacer que la pagina se recarge en cada accion
+//
 /*
 async function getProducts() {
   const res = await fetch("http://apiparaprincipiantes.test/api/videoGames", {
