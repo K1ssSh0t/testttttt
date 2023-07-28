@@ -3,19 +3,22 @@
 import { DeleteProduct } from "@/components/deleteProduct";
 import { UpdateProduct } from "@/components/updateProduct";
 import { ColumnDef } from "@tanstack/react-table";
+import { categoriesAtom } from "@/atoms/categoriesAtom";
+import { useAtom, useSetAtom } from "jotai";
 
 // This type is used to define the shape of our data.
 // You can use a Zod schema here if you want.
 export type Product = {
   id: number;
   name: string;
-  category_id: 1 | 2 | 3 | 4;
+  category_id: number;
   score: number;
 };
 
 // TODO: Hacer que las categorias se muestre por nombre
 
 export const columns: ColumnDef<Product>[] = [
+  { accessorKey: "id", header: "ID" },
   {
     accessorKey: "name",
     header: "Name",
@@ -23,6 +26,16 @@ export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "category_id",
     header: "Category",
+    cell: ({ row }) => {
+      const [categories, setCategories] = useAtom(categoriesAtom);
+
+      const category_id = parseFloat(row.getValue("category_id"));
+      const category = categories.find(
+        (category: { id: number }) => category.id == category_id
+      );
+
+      return <div className="font-medium">{category.name}</div>;
+    },
   },
 
   {
