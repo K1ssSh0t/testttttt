@@ -6,22 +6,22 @@ import { DataTable } from "./data-table";
 import { columns } from "./columns";
 import { useEffect, useState } from "react";
 import { Provider } from "jotai";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
+    const data = `${API_URL}videoGames`;
+    console.log(data);
     async function getProducts() {
-      const data = await fetch(
-        "https://laravel-api-production.up.railway.app/api/videoGames",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "aplication/json",
-            "Cache-Control": "no-cache, private",
-          },
-        }
-      ).then((res) => {
+      const data = await fetch(`${API_URL}videoGames`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "aplication/json",
+          "Cache-Control": "no-cache, private",
+        },
+      }).then((res) => {
         return res.json();
       });
       setProducts(data);

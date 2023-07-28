@@ -1,27 +1,24 @@
-import { Metadata } from "next";
 import { DataTable } from "../products/data-table";
 import { columns } from "./columns";
 
 export const revalidate = 0;
 
 async function getCategories() {
-  const data = await fetch(
-    "https://laravel-api-production.up.railway.app/api/categories",
-    {
-      method: "GET",
-      headers: {
-        "Content-Type": "aplication/json",
-        "Cache-Control": "no-cache, private",
-      },
-      next: { revalidate: 0 },
-    }
-  );
+  const data = await fetch(`${process.env.URL_API}categories`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "aplication/json",
+      "Cache-Control": "no-cache, private",
+    },
+    next: { revalidate: 0 },
+  });
 
   return data.json();
 }
 
 export default async function Categories() {
-  //const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
+
   /*
   useEffect(() => {
     async function getProducts() {
@@ -42,11 +39,13 @@ export default async function Categories() {
     }
 
     getProducts();
-  }, []);*/
-  const data = await getCategories();
+  }, []);
+  */
+
+  const categories = await getCategories();
   return (
     <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <DataTable data={data} columns={columns} />
+      <DataTable data={categories} columns={columns} />
     </main>
   );
 }

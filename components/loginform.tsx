@@ -18,6 +18,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { userDataAtom } from "@/atoms/categoriesAtom";
 import { useAtomValue, useSetAtom } from "jotai";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 export function ProfileForm() {
   const setUser = useSetAtom(userDataAtom);
@@ -43,7 +44,7 @@ export function ProfileForm() {
     // ✅ This will be type-safe and validated.
     async function fetchData() {
       const data = await fetch(
-        `https://laravel-api-production.up.railway.app/api/clientes/${values.email}/${values.password}`,
+        `${API_URL}clientes/${values.email}/${values.password}`,
         {
           method: "GET",
           headers: {

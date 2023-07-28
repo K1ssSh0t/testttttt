@@ -29,6 +29,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { useAtom } from "jotai";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 import { categoriesAtom } from "@/atoms/categoriesAtom";
 
@@ -60,17 +61,14 @@ export function DialogDemo() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     async function fetchData() {
-      const data = await fetch(
-        "https://laravel-api-production.up.railway.app/api/videoGames",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "aplication/json",
-            Accept: "aplication/json",
-          },
-          body: JSON.stringify(values),
-        }
-      ).then((res) => {
+      const data = await fetch(`${API_URL}videoGames`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "aplication/json",
+          Accept: "aplication/json",
+        },
+        body: JSON.stringify(values),
+      }).then((res) => {
         return res.json();
       });
       // console.log(data);
@@ -162,9 +160,7 @@ export function DialogDemo() {
             <Button type="submit">Submit</Button>
           </form>
         </Form>
-        <DialogFooter>
-          <Button type="submit">Done</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

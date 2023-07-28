@@ -33,6 +33,7 @@ import { useRouter } from "next/navigation";
 
 import { atom, useAtom } from "jotai";
 import { useHydrateAtoms } from "jotai/utils";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 type Product = {
   id: number;
@@ -70,18 +71,15 @@ export function UpdateProduct({ Product }: { Product: Product }) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     async function updateData() {
-      const data = await fetch(
-        `https://laravel-api-production.up.railway.app/api/videoGames/${Product.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "aplication/json",
-            "Cache-Control": "no-cache, private",
-            Accept: "aplication/json",
-          },
-          body: JSON.stringify(values),
-        }
-      ).then((res) => {
+      const data = await fetch(`${API_URL}videoGames/${Product.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "aplication/json",
+          "Cache-Control": "no-cache, private",
+          Accept: "aplication/json",
+        },
+        body: JSON.stringify(values),
+      }).then((res) => {
         return res;
       });
       // console.log(data);
@@ -101,7 +99,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Create Product</DialogTitle>
+          <DialogTitle>Update Product</DialogTitle>
           <DialogDescription>
             Make changes to your profile here. Click save when you &apos re
             done.
@@ -176,9 +174,7 @@ export function UpdateProduct({ Product }: { Product: Product }) {
             <Button type="submit">Submit</Button>
           </form>
         </Form>
-        <DialogFooter>
-          <Button type="submit">Done</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

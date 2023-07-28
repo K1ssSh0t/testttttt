@@ -28,12 +28,8 @@ export default function Home() {
           </div>
           <div className="relative z-20 mt-auto">
             <blockquote className="space-y-2">
-              <p className="text-lg">
-                &ldquo;This library has saved me countless hours of work and
-                helped me deliver stunning designs to my clients faster than
-                ever before.&rdquo;
-              </p>
-              <footer className="text-sm">Sofia Davis</footer>
+              <p className="text-lg">&ldquo; CRUD APP&rdquo;</p>
+              <footer className="text-sm"></footer>
             </blockquote>
           </div>
         </div>
@@ -56,14 +52,14 @@ export default function Home() {
             <p className="px-8 text-center text-sm text-muted-foreground">
               By clicking continue, you agree to our{" "}
               <Link
-                href="/terms"
+                href="/"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Terms of Service
               </Link>{" "}
               and{" "}
               <Link
-                href="/privacy"
+                href="/"
                 className="underline underline-offset-4 hover:text-primary"
               >
                 Privacy Policy

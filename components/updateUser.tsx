@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 type User = {
   id: number;
@@ -71,17 +72,14 @@ export function UpdateUser({ User }: { User: User }) {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     async function fetchData() {
-      const data = await fetch(
-        `https://laravel-api-production.up.railway.app/api/clientes/${User.id}`,
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "aplication/json",
-            Accept: "aplication/json",
-          },
-          body: JSON.stringify(values),
-        }
-      )
+      const data = await fetch(`${API_URL}clientes/${User.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "aplication/json",
+          Accept: "aplication/json",
+        },
+        body: JSON.stringify(values),
+      })
         .then((res) => {
           if (res.ok) {
             router.refresh();
@@ -105,7 +103,7 @@ export function UpdateUser({ User }: { User: User }) {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] max-h-[670px]  overflow-y-scroll  ">
         <DialogHeader>
-          <DialogTitle>Update Userr</DialogTitle>
+          <DialogTitle>Update User</DialogTitle>
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <Form {...form}>
@@ -183,9 +181,7 @@ export function UpdateUser({ User }: { User: User }) {
             <Button type="submit">Submit</Button>
           </form>
         </Form>
-        <DialogFooter>
-          <Button type="submit">Done</Button>
-        </DialogFooter>
+        <DialogFooter></DialogFooter>
       </DialogContent>
     </Dialog>
   );

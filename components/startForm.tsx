@@ -28,6 +28,7 @@ import { useRouter } from "next/navigation";
 import { ProfileForm } from "./loginform";
 import { userDataAtom } from "@/atoms/categoriesAtom";
 import { useAtomValue, useSetAtom } from "jotai";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 export function LoginForm() {
   const setUser = useSetAtom(userDataAtom);
@@ -68,17 +69,14 @@ export function LoginForm() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     async function fetchData() {
-      const data = await fetch(
-        `https://laravel-api-production.up.railway.app/api/clientes`,
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "aplication/json",
-            Accept: "aplication/json",
-          },
-          body: JSON.stringify(values),
-        }
-      )
+      const data = await fetch(`${API_URL}clientes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "aplication/json",
+          Accept: "aplication/json",
+        },
+        body: JSON.stringify(values),
+      })
         .then((res) => {
           if (res.ok) {
             router.push("/dashboard/products");

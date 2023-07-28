@@ -27,6 +27,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 export function AddUser() {
   const formSchema = z
@@ -65,17 +66,14 @@ export function AddUser() {
     // Do something with the form values.
     // ✅ This will be type-safe and validated.
     async function fetchData() {
-      const data = await fetch(
-        "https://laravel-api-production.up.railway.app/api/clientes",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "aplication/json",
-            Accept: "aplication/json",
-          },
-          body: JSON.stringify(values),
-        }
-      ).then((res) => {
+      const data = await fetch(`${API_URL}clientes`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "aplication/json",
+          Accept: "aplication/json",
+        },
+        body: JSON.stringify(values),
+      }).then((res) => {
         return res.json();
       });
       // console.log(data);

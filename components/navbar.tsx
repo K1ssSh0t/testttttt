@@ -39,7 +39,7 @@ export function SiteHeader() {
           <nav className="flex items-center text-sm font-medium">
             <Avatar className=" mx-2">
               <AvatarImage src={user.profile_picture} />
-              <AvatarFallback>{user.name}</AvatarFallback>
+              <AvatarFallback>{user.id}</AvatarFallback>
             </Avatar>
 
             <Link

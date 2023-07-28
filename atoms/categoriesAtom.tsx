@@ -2,7 +2,7 @@ import { atom, useAtom } from "jotai";
 import { atomWithStorage } from "jotai/utils";
 
 const data = async () =>
-  await fetch("https://laravel-api-production.up.railway.app/api/categories", {
+  await fetch(`${API_URL}categories`, {
     method: "GET",
     headers: {
       "Content-Type": "aplication/json",
@@ -32,3 +32,7 @@ export const userDataAtom = atomWithStorage<any>("userData", {
     "https://www.nicepng.com/png/detail/914-9142519_doge-meme-dog-doggo-funny-sticker-momo-png.png",
 });
 */
+
+export const API_URL = "https://laravel-api-production.up.railway.app/api/";
+
+//export const API_URL = "http://apiparaprincipiantes.test/api/";

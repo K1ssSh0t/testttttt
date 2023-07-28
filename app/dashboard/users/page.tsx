@@ -4,22 +4,20 @@ import { useEffect, useState } from "react";
 import { DataTable } from "../products/data-table";
 import { columns } from "./columns";
 import { AddUser } from "@/components/newUser";
+import { API_URL } from "@/atoms/categoriesAtom";
 
 export default function Users() {
   const [clientes, setClientes] = useState([]);
   useEffect(() => {
     async function getClients() {
-      const data = await fetch(
-        "https://laravel-api-production.up.railway.app/api/clientes",
-        {
-          method: "GET",
-          headers: {
-            "Content-Type": "aplication/json",
-            "Cache-Control": "no-cache, private",
-          },
-          next: { revalidate: 0 },
-        }
-      ).then((res) => {
+      const data = await fetch(`${API_URL}clientes`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "aplication/json",
+          "Cache-Control": "no-cache, private",
+        },
+        next: { revalidate: 0 },
+      }).then((res) => {
         return res.json();
       });
       setClientes(data);
