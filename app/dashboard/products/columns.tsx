@@ -13,6 +13,8 @@ export type Product = {
   score: number;
 };
 
+// TODO: Hacer que las categorias se muestre por nombre
+
 export const columns: ColumnDef<Product>[] = [
   {
     accessorKey: "name",

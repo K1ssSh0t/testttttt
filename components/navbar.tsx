@@ -23,41 +23,6 @@ export function MainNav() {
         <Icons.logo className="h-6 w-6" />
         <span className="hidden font-bold sm:inline-block">CRUD APP</span>
       </div>
-      <nav className="flex items-center space-x-6 text-sm font-medium">
-        <Link
-          href="/dashboard/products"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname === "/dashboard/products"
-              ? "text-foreground"
-              : "text-foreground/60"
-          )}
-        >
-          Products
-        </Link>
-        <Link
-          href="/dashboard/users"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/dashboard/users")
-              ? "text-foreground"
-              : "text-foreground/60"
-          )}
-        >
-          Users
-        </Link>
-        <Link
-          href="/dashboard/categories"
-          className={cn(
-            "transition-colors hover:text-foreground/80",
-            pathname?.startsWith("/dashboard/categories")
-              ? "text-foreground"
-              : "text-foreground/60"
-          )}
-        >
-          Categories
-        </Link>
-      </nav>
     </div>
   );
 }
